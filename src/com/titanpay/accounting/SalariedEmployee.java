@@ -18,8 +18,8 @@ public class SalariedEmployee extends Employee implements Payable {
 	}
 
 	@Override
-	public String getFullName(String lastName, String firstName) {
-		return lastName + ", " + firstName;
+	public String getFullName() {
+		return this.getLastName() + ", " + this.getFirstName();
 	}
 	
 	public void makeSale(double amt) {
@@ -30,10 +30,12 @@ public class SalariedEmployee extends Employee implements Payable {
 	public void pay(Date startDate, Date endDate) {
 		double pay = salary;
 		for (Receipt r : receipts) {
-			pay += pay + (commissionRate * r.getSaleAmt());
+			if ((r.getDate().after(startDate) || r.getDate() == startDate) && 
+			(r.getDate().before(endDate) || r.getDate() == endDate)) {
+				pay += commissionRate * r.getSaleAmt();
+			}
 		}
-		this.getPayMethod().pay(this.getFullName
-		(this.getLastName(), this.getFirstName()), pay);
+		this.getPayMethod().pay(this.getFullName(), pay);
 		
 	}
 }

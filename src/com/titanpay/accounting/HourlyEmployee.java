@@ -3,7 +3,7 @@ package com.titanpay.accounting;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class HourlyEmployee extends Employee implements Payable {
+public class HourlyEmployee extends Employee {
 	
 	private double hourlyRate;
 	private ArrayList<TimeCard> timecards;
@@ -16,17 +16,21 @@ public class HourlyEmployee extends Employee implements Payable {
 	}
 
 	@Override
-	public String getFullName(String lastName, String firstName) {
-		return lastName + ", " + firstName;
+	public String getFullName() {
+		return this.getLastName() + ", " + this.getFirstName();
 	}
 	
 	public void clockIn() {
 		timecards.add(new TimeCard(new Date(), (double)System.currentTimeMillis(), 0));
 	}
 	
-	public void clockOut(Date currentDate) {
+	public void clockOut() {
 		for (TimeCard t: timecards) {
-			t.setEndTime((double)System.currentTimeMillis());
+			Date timecardDate = t.getDate();
+			Date currentDate = new Date();
+			if (timecardDate == currentDate){
+				t.setEndTime((double)System.currentTimeMillis());
+			}
 		}
 	}
 
@@ -34,9 +38,12 @@ public class HourlyEmployee extends Employee implements Payable {
 	public void pay(Date startDate, Date endDate) {
 		double pay = 0;
 		for (TimeCard t: timecards) {
-			pay = t.calculateDailyPay(10.00);
+			if ((t.getDate().after(startDate) || t.getDate() == startDate) && 
+			(t.getDate().before(endDate) || t.getDate() == endDate)) {
+				pay += t.calculateDailyPay(10.00);
+			}
 		}
-		this.getPayMethod().pay(this.getFullName
-		(this.getLastName(), this.getFirstName()), pay);
+		this.getPayMethod().pay(this.getFullName(), pay);
+		
 	}
 }

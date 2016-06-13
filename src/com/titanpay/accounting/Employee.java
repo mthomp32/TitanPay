@@ -1,6 +1,6 @@
 package com.titanpay.accounting;
 
-public abstract class Employee {
+public abstract class Employee implements Payable {
 	
 	private int employeeId;
 	private String firstName;
@@ -17,7 +17,7 @@ public abstract class Employee {
 		this.payMethod = payMethod;
 	}
 	
-	public  abstract String getFullName(String lastName, String firstName);
+	public  abstract String getFullName();
 
 	public int getEmployeeId() {
 		return employeeId;

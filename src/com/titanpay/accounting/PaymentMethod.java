@@ -16,15 +16,8 @@ public abstract class PaymentMethod {
 		return name;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
 	public double getPayAmount() {
 		return payAmount;
 	}
 
-	public void setPayAmount(double payAmount) {
-		this.payAmount = payAmount;
-	}
 }
