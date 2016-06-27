@@ -4,6 +4,6 @@ import java.util.Date;
 
 public interface Payable {
 	
-	public void pay(Date startDate, Date endDate);
+	public String pay(Date startDate, Date endDate);
 
 }

@@ -1,15 +1,19 @@
 package com.titanpay.accounting;
 
+import java.io.File;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Scanner;
 
 public class HourlyEmployee extends Employee {
 	
 	private double hourlyRate;
 	private ArrayList<TimeCard> timecards;
 
-	public HourlyEmployee(int employeeId, String firstName, String lastName, 
-	double weeklyDues, double hourlyRate, PaymentMethod payMethod) {
+	public HourlyEmployee(int employeeId, String lastName, String firstName, 
+	double hourlyRate, double weeklyDues, PaymentMethod payMethod) {
 		super(employeeId, firstName, lastName, weeklyDues, payMethod);
 		this.hourlyRate = hourlyRate;
 		this.timecards = new ArrayList<TimeCard>();
@@ -35,7 +39,7 @@ public class HourlyEmployee extends Employee {
 	}
 
 	@Override
-	public void pay(Date startDate, Date endDate) {
+	public String pay(Date startDate, Date endDate) {
 		double pay = 0;
 		for (TimeCard t: timecards) {
 			if ((t.getDate().after(startDate) || t.getDate() == startDate) && 
@@ -43,7 +47,26 @@ public class HourlyEmployee extends Employee {
 				pay += t.calculateDailyPay(10.00);
 			}
 		}
-		this.getPayMethod().pay(this.getFullName(), pay);
+		return this.getPayMethod().pay(this.getFullName(), pay);
 		
+	}
+	
+	public void readTimesheet() throws Exception {
+    	Scanner scanner = new Scanner(new File("timecards.csv"));
+    	scanner.useDelimiter(",");
+    	while (scanner.hasNext()) {
+    		int id = scanner.nextInt();
+    		int in = scanner.nextInt();
+    		int out = scanner.nextInt();
+    		String dateString = scanner.next();
+    		DateFormat conversion = new SimpleDateFormat("MMMM d, yyyy");
+    		Date date = conversion.parse(dateString);
+    		TimeCard timecard = new TimeCard(date, in, out);
+    		if (id == this.getEmployeeId()) {
+    			timecards.add(timecard);
+    		}
+    		
+    	}
+    	scanner.close();
 	}
 }

@@ -2,8 +2,8 @@ package com.titanpay.accounting;
 
 public class DirectDepositPayment extends PaymentMethod {
 
-	public DirectDepositPayment(String name, double payAmount) {
-		super(name, payAmount);
+	public DirectDepositPayment(String name) {
+		super(name);
 	}
 	
 	@Override

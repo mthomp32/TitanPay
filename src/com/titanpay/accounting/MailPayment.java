@@ -4,9 +4,8 @@ public class MailPayment extends PaymentMethod {
 	
 	private Address address;
 	
-	public MailPayment (String name, double payAmount, Address address){
-		super(name, payAmount);
-		this.address = address;
+	public MailPayment (String name){
+		super(name);
 	}
 
 	@Override
@@ -17,5 +16,9 @@ public class MailPayment extends PaymentMethod {
 
 	public Address getAddress() {
 		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
 	}
 }

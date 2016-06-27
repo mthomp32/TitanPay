@@ -10,7 +10,7 @@ public class SalariedEmployee extends Employee implements Payable {
 	private ArrayList<Receipt> receipts;
 	
 	public SalariedEmployee(int employeeId, String firstName, String lastName, 
-	double weeklyDues, double salary, double commissionRate, PaymentMethod payMethod) {
+	double salary, double commissionRate, double weeklyDues, PaymentMethod payMethod) {
 		super(employeeId, firstName, lastName, weeklyDues, payMethod);
 		this.salary = salary;
 		this.commissionRate = commissionRate;
@@ -27,7 +27,7 @@ public class SalariedEmployee extends Employee implements Payable {
 	}
 
 	@Override
-	public void pay(Date startDate, Date endDate) {
+	public String pay(Date startDate, Date endDate) {
 		double pay = salary;
 		for (Receipt r : receipts) {
 			if ((r.getDate().after(startDate) || r.getDate() == startDate) && 
@@ -35,7 +35,7 @@ public class SalariedEmployee extends Employee implements Payable {
 				pay += commissionRate * r.getSaleAmt();
 			}
 		}
-		this.getPayMethod().pay(this.getFullName(), pay);
+		return this.getPayMethod().pay(this.getFullName(), pay);
 		
 	}
 }

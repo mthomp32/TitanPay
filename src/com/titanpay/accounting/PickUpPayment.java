@@ -3,7 +3,7 @@ package com.titanpay.accounting;
 public class PickUpPayment extends PaymentMethod {
 	
 	public PickUpPayment (String name, double payAmount){
-		super(name, payAmount);
+		super(name);
 	}
 
 	@Override
