@@ -1,7 +1,9 @@
 package com.titanpay.accounting;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -24,6 +26,10 @@ public class HourlyEmployee extends Employee {
 		return this.getLastName() + ", " + this.getFirstName();
 	}
 	
+	public double getHourlyRate() {
+		return hourlyRate;
+	}
+	
 	public void clockIn() {
 		timecards.add(new TimeCard(new Date(), (double)System.currentTimeMillis(), 0));
 	}
@@ -44,17 +50,18 @@ public class HourlyEmployee extends Employee {
 		for (TimeCard t: timecards) {
 			if ((t.getDate().after(startDate) || t.getDate() == startDate) && 
 			(t.getDate().before(endDate) || t.getDate() == endDate)) {
-				pay += t.calculateDailyPay(10.00);
+				pay += t.calculateDailyPay(this.getHourlyRate());
 			}
 		}
 		return this.getPayMethod().pay(this.getFullName(), pay);
 		
 	}
 	
-	public void readTimesheet() throws Exception {
+	public void readTimesheet() throws ParseException, FileNotFoundException {
     	Scanner scanner = new Scanner(new File("timecards.csv"));
     	scanner.useDelimiter(",");
     	while (scanner.hasNext()) {
+    		scanner.nextLine();
     		int id = scanner.nextInt();
     		int in = scanner.nextInt();
     		int out = scanner.nextInt();

@@ -9,7 +9,7 @@ public class SalariedEmployee extends Employee implements Payable {
 	private double commissionRate;
 	private ArrayList<Receipt> receipts;
 	
-	public SalariedEmployee(int employeeId, String firstName, String lastName, 
+	public SalariedEmployee(int employeeId, String lastName, String firstName, 
 	double salary, double commissionRate, double weeklyDues, PaymentMethod payMethod) {
 		super(employeeId, firstName, lastName, weeklyDues, payMethod);
 		this.salary = salary;

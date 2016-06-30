@@ -1,13 +1,17 @@
 package com.titanpay;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 import com.titanpay.accounting.DirectDepositPayment;
 import com.titanpay.accounting.HourlyEmployee;
+import com.titanpay.accounting.MailPayment;
+import com.titanpay.accounting.PickUpPayment;
 import com.titanpay.accounting.SalariedEmployee;
 import com.titanpay.view.RunPayrollController;
 
@@ -24,26 +28,71 @@ public class MainApp extends Application {
 	private ArrayList<SalariedEmployee> salariedEmployees;
     private ArrayList<HourlyEmployee> hourlyEmployees;
     
-    public void readHourlyEmployees() throws Exception {
+    public void readHourlyEmployees() throws FileNotFoundException {
 		Scanner scanner = new Scanner(new File("hourly_employees.csv"));
 		scanner.useDelimiter(",");
 		while (scanner.hasNext()) {
-			HourlyEmployee hourly = new HourlyEmployee(scanner.nextInt(), scanner.next(), 
-			scanner.next(), scanner.nextDouble(), scanner.nextDouble(), 
-			new DirectDepositPayment(scanner.next()));
-			hourlyEmployees.add(hourly);
+			scanner.nextLine();
+			scanner.nextLine();
+			int employeeId = scanner.nextInt();
+			String lastName = scanner.next();
+			String firstName = scanner.next();
+			double hourlyRate = scanner.nextDouble();
+			double dues = scanner.nextDouble();
+			String payMethod = scanner.next();
+			
+			if (payMethod == "DD") {
+				HourlyEmployee hourly = new HourlyEmployee(employeeId, lastName, 
+				firstName, hourlyRate, dues, new DirectDepositPayment(payMethod));
+				hourlyEmployees.add(hourly);
+			}
+			else if (payMethod == "PU") {
+				HourlyEmployee hourly = new HourlyEmployee(employeeId, lastName, 
+				firstName, hourlyRate, dues, new PickUpPayment(payMethod));
+				hourlyEmployees.add(hourly);
+			}
+			else {
+				HourlyEmployee hourly = new HourlyEmployee(employeeId, lastName, 
+				firstName, hourlyRate, dues, new MailPayment(payMethod));
+				hourlyEmployees.add(hourly);
+			}
 		}
 		scanner.close();
     }
     
-    public void readSalariedEmployees() throws Exception {
+    public void readSalariedEmployees() throws FileNotFoundException {
     	Scanner scanner = new Scanner(new File("salaried_employees.csv"));
     	scanner.useDelimiter(",");
     	while (scanner.hasNext()) {
-    		SalariedEmployee salaried = new SalariedEmployee(scanner.nextInt(),
-    		scanner.next(), scanner.next(), scanner.nextDouble(), scanner.nextDouble(),
-    		scanner.nextDouble(), new DirectDepositPayment(scanner.next()));
-    		salariedEmployees.add(salaried);
+    		scanner.nextLine();
+    		scanner.nextLine();
+    		int employeeId = scanner.nextInt();
+    		String lastName = scanner.next();
+    		String firstName = scanner.next();
+    		double salary = scanner.nextDouble();
+    		double commission = scanner.nextDouble();
+    		double dues = scanner.nextDouble();
+    		String payMethod = scanner.next();
+    		
+    		if (payMethod == "DD") {
+    			SalariedEmployee salaried = new SalariedEmployee(employeeId,
+    		    lastName, firstName, salary, commission, dues, 
+    		    new DirectDepositPayment(payMethod));
+    		    salariedEmployees.add(salaried);
+    		}
+    		else if (payMethod == "PU") {
+    			SalariedEmployee salaried = new SalariedEmployee(employeeId,
+    			lastName, firstName, salary, commission, dues, 
+    	    	new PickUpPayment(payMethod));
+    	    	salariedEmployees.add(salaried);
+    		}
+    		else {
+    			SalariedEmployee salaried = new SalariedEmployee(employeeId,
+    	    	lastName, firstName, salary, commission, dues, 
+    	    	new MailPayment(payMethod));
+    			salariedEmployees.add(salaried);
+    		}
+    		
     	}
     	scanner.close();
     }
@@ -56,7 +105,7 @@ public class MainApp extends Application {
     	return salariedEmployees;
     }
     
-    public String outputHourlyPay() throws Exception {
+    public String outputHourlyPay() throws ParseException, Exception {
     	String hourlyOutput = "";
     	for (HourlyEmployee h: hourlyEmployees) {
     		SimpleDateFormat f = new SimpleDateFormat("yyyy-mm-dd");
@@ -66,7 +115,7 @@ public class MainApp extends Application {
     	return hourlyOutput;
     }
     
-    public String outputSalariedPay() throws Exception {
+    public String outputSalariedPay() throws ParseException, Exception {
     	String salariedOutput = "";
     	for (SalariedEmployee s: salariedEmployees) {
     		SimpleDateFormat f = new SimpleDateFormat("yyyy-mm-dd");
@@ -76,7 +125,9 @@ public class MainApp extends Application {
     }
 
 	@Override
-	public void start(Stage primaryStage) {
+	public void start(Stage primaryStage) throws Exception {
+		this.hourlyEmployees = new ArrayList<HourlyEmployee>();
+		this.salariedEmployees = new ArrayList<SalariedEmployee>();
 		this.primaryStage = primaryStage;
 		this.primaryStage.setTitle("TitanPay Payroll");
 		
@@ -84,7 +135,7 @@ public class MainApp extends Application {
 		
 	}
 	
-	public void showRunPayroll() {
+	public void showRunPayroll() throws Exception {
 		
 		try {
 			FXMLLoader loader = new FXMLLoader();

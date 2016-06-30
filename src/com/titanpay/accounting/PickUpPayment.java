@@ -2,7 +2,7 @@ package com.titanpay.accounting;
 
 public class PickUpPayment extends PaymentMethod {
 	
-	public PickUpPayment (String name, double payAmount){
+	public PickUpPayment (String name){
 		super(name);
 	}
 

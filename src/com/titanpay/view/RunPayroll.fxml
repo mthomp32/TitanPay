@@ -4,7 +4,6 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
 
@@ -18,14 +17,6 @@
       <Label layoutX="33.0" layoutY="210.0" text="Results:" AnchorPane.bottomAnchor="173.0" />
       <Button fx:id="btRun" layoutX="28.0" layoutY="361.0" mnemonicParsing="false" onAction="#runPayroll" prefHeight="25.0" prefWidth="81.0" text="Run" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="28.0" />
       <Button fx:id="btCancel" layoutX="505.0" layoutY="361.0" mnemonicParsing="false" onAction="#cancel" prefHeight="25.0" prefWidth="81.0" text="Cancel" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0" />
-      <ScrollPane layoutX="19.0" layoutY="234.0" prefHeight="117.0" prefWidth="563.0" AnchorPane.bottomAnchor="49.0" AnchorPane.leftAnchor="19.0">
-        <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0">
-               <children>
-                  <TextArea fx:id="taResults" editable="false" prefHeight="117.0" prefWidth="547.0" AnchorPane.bottomAnchor="83.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-347.0" AnchorPane.topAnchor="0.0" />
-               </children>
-            </AnchorPane>
-        </content>
-      </ScrollPane>
+      <TextArea fx:id="taResults" layoutX="21.0" layoutY="229.0" prefHeight="123.0" prefWidth="559.0" />
    </children>
 </AnchorPane>

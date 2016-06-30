@@ -7,6 +7,9 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
+
+import java.io.IOException;
+
 import com.titanpay.MainApp;
 
 
@@ -41,13 +44,19 @@ public class RunPayrollController {
     	
     }
     
-    public void setMainApp(MainApp mainApp) {
+    public void setMainApp(MainApp mainApp) throws IOException {
     	this.mainApp = mainApp;
+    	
+    	mainApp.readHourlyEmployees();
+    	mainApp.readSalariedEmployees();
+    	mainApp.getHourlyData();
+    	mainApp.getSalaryData();
  
     } 
     
     @FXML
     private void runPayroll() throws Exception {
+    	
     	if (rbHourly.isSelected()) {
     		taResults.setText(mainApp.outputHourlyPay());
     	}
