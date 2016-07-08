@@ -18,5 +18,6 @@
       <Button fx:id="btRun" layoutX="28.0" layoutY="361.0" mnemonicParsing="false" onAction="#runPayroll" prefHeight="25.0" prefWidth="81.0" text="Run" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="28.0" />
       <Button fx:id="btCancel" layoutX="505.0" layoutY="361.0" mnemonicParsing="false" onAction="#cancel" prefHeight="25.0" prefWidth="81.0" text="Cancel" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0" />
       <TextArea fx:id="taResults" layoutX="21.0" layoutY="229.0" prefHeight="123.0" prefWidth="559.0" />
+      <Button fx:id="btImportEmployees" layoutX="459.0" layoutY="10.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="127.0" text="Import Employees" />
    </children>
 </AnchorPane>

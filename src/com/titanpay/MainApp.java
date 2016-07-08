@@ -31,22 +31,22 @@ public class MainApp extends Application {
     public void readHourlyEmployees() throws FileNotFoundException {
 		Scanner scanner = new Scanner(new File("hourly_employees.csv"));
 		scanner.useDelimiter(",");
+		scanner.nextLine();
 		while (scanner.hasNext()) {
-			scanner.nextLine();
-			scanner.nextLine();
 			int employeeId = scanner.nextInt();
 			String lastName = scanner.next();
 			String firstName = scanner.next();
 			double hourlyRate = scanner.nextDouble();
-			double dues = scanner.nextDouble();
-			String payMethod = scanner.next();
+			String duesVal = scanner.next();
+			double dues = duesVal == "" ? 0.00 : Double.parseDouble(duesVal);
+			String payMethod = scanner.nextLine();
 			
-			if (payMethod == "DD") {
+			if (payMethod == ", DD ") {
 				HourlyEmployee hourly = new HourlyEmployee(employeeId, lastName, 
 				firstName, hourlyRate, dues, new DirectDepositPayment(payMethod));
 				hourlyEmployees.add(hourly);
 			}
-			else if (payMethod == "PU") {
+			else if (payMethod == ", PU ") {
 				HourlyEmployee hourly = new HourlyEmployee(employeeId, lastName, 
 				firstName, hourlyRate, dues, new PickUpPayment(payMethod));
 				hourlyEmployees.add(hourly);
@@ -63,24 +63,24 @@ public class MainApp extends Application {
     public void readSalariedEmployees() throws FileNotFoundException {
     	Scanner scanner = new Scanner(new File("salaried_employees.csv"));
     	scanner.useDelimiter(",");
+    	scanner.nextLine();
     	while (scanner.hasNext()) {
-    		scanner.nextLine();
-    		scanner.nextLine();
     		int employeeId = scanner.nextInt();
     		String lastName = scanner.next();
     		String firstName = scanner.next();
     		double salary = scanner.nextDouble();
     		double commission = scanner.nextDouble();
-    		double dues = scanner.nextDouble();
-    		String payMethod = scanner.next();
+    		String duesVal = scanner.next();
+			double dues = duesVal == "" ? 0.00 : Double.parseDouble(duesVal);
+    		String payMethod = scanner.nextLine();
     		
-    		if (payMethod == "DD") {
+    		if (payMethod == ", DD ") {
     			SalariedEmployee salaried = new SalariedEmployee(employeeId,
     		    lastName, firstName, salary, commission, dues, 
     		    new DirectDepositPayment(payMethod));
     		    salariedEmployees.add(salaried);
     		}
-    		else if (payMethod == "PU") {
+    		else if (payMethod == ", PU ") {
     			SalariedEmployee salaried = new SalariedEmployee(employeeId,
     			lastName, firstName, salary, commission, dues, 
     	    	new PickUpPayment(payMethod));
@@ -92,7 +92,6 @@ public class MainApp extends Application {
     	    	new MailPayment(payMethod));
     			salariedEmployees.add(salaried);
     		}
-    		
     	}
     	scanner.close();
     }

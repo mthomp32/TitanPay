@@ -38,4 +38,8 @@ public class SalariedEmployee extends Employee implements Payable {
 		return this.getPayMethod().pay(this.getFullName(), pay);
 		
 	}
+	
+	public ArrayList<Receipt> getReceipts() {
+		return this.receipts;
+	}
 }

@@ -76,4 +76,8 @@ public class HourlyEmployee extends Employee {
     	}
     	scanner.close();
 	}
+
+	public ArrayList<TimeCard> getTimecards() {
+		return this.timecards;
+	}
 }

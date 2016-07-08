@@ -21,6 +21,8 @@ public class RunPayrollController {
     @FXML
     private Button btCancel;
     @FXML
+    private Button btImportEmployees;
+    @FXML
     private RadioButton rbAll;
     @FXML
     private RadioButton rbHourly;

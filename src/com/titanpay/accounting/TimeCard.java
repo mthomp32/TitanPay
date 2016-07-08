@@ -30,7 +30,7 @@ public class TimeCard {
 	}
 	
 	public Date getDate() {
-		return date;
+		return this.date;
 	}
 
 	public void setDate(Date date) {
