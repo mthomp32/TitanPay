@@ -72,6 +72,11 @@ public class RunPayrollController {
     }
     
     @FXML
+    private void ImportEmployees() {
+    	mainApp.Import();
+    }
+    
+    @FXML
     private void cancel() {
     	Stage stage = (Stage) btCancel.getScene().getWindow();
     	stage.close();

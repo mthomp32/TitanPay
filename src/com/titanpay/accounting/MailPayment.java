@@ -7,6 +7,10 @@ public class MailPayment extends PaymentMethod {
 	public MailPayment (String name){
 		super(name);
 	}
+	
+	public MailPayment() {
+		
+	}
 
 	@Override
 	public String pay(String name, double payAmount) {

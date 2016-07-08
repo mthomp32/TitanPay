@@ -9,8 +9,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class HourlyEmployee extends Employee {
 	
+	@Id
 	private double hourlyRate;
 	private ArrayList<TimeCard> timecards;
 
@@ -60,15 +65,19 @@ public class HourlyEmployee extends Employee {
 	public void readTimesheet() throws ParseException, FileNotFoundException {
     	Scanner scanner = new Scanner(new File("timecards.csv"));
     	scanner.useDelimiter(",");
+    	scanner.nextLine();
     	while (scanner.hasNext()) {
-    		scanner.nextLine();
     		int id = scanner.nextInt();
     		int in = scanner.nextInt();
     		int out = scanner.nextInt();
-    		String dateString = scanner.next();
-    		DateFormat conversion = new SimpleDateFormat("MMMM d, yyyy");
-    		Date date = conversion.parse(dateString);
-    		TimeCard timecard = new TimeCard(date, in, out);
+    		String dateStringComma = scanner.nextLine();
+    		String delims = "[,]";
+    		String[] tokens = dateStringComma.split(delims);
+    		String dateSpace = tokens[1];
+    		String date = dateSpace.trim();
+    		DateFormat conversion = new SimpleDateFormat("dd-MMM-yy");
+    		Date dateFinal = conversion.parse(date);
+    		TimeCard timecard = new TimeCard(dateFinal, in, out);
     		if (id == this.getEmployeeId()) {
     			timecards.add(timecard);
     		}

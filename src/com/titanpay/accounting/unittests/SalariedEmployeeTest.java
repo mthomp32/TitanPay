@@ -2,6 +2,8 @@ package com.titanpay.accounting.unittests;
 
 import static org.junit.Assert.*;
 
+import java.io.FileNotFoundException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -10,6 +12,7 @@ import org.junit.Test;
 import com.titanpay.accounting.DirectDepositPayment;
 import com.titanpay.accounting.Receipt;
 import com.titanpay.accounting.SalariedEmployee;
+
 
 public class SalariedEmployeeTest {
 
@@ -33,6 +36,17 @@ public class SalariedEmployeeTest {
 		employee.getReceipts();
 				
 		assertNotNull(employee.pay(new Date(), new Date()));
+	}
+	
+	@Test
+	public void testReadReceipts() throws FileNotFoundException, ParseException {
+		SalariedEmployee employee = new SalariedEmployee(1, "Thompson", "Mitchell", 50000.00, 
+		8.00, 50.00, new DirectDepositPayment("DD"));
+		
+		employee.readReceipts();
+		ArrayList<Receipt> r = employee.getReceipts();
+		
+		assertNotNull(r.size());
 	}
 
 }

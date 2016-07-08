@@ -6,6 +6,10 @@ public class DirectDepositPayment extends PaymentMethod {
 		super(name);
 	}
 	
+	public DirectDepositPayment() {
+		
+	}
+	
 	@Override
 	public String pay(String name, double payAmount) {
 		return "A check for " + payAmount + " is being deposited for " + name + 

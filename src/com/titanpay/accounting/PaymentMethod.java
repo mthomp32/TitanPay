@@ -4,6 +4,10 @@ public abstract class PaymentMethod {
 	
 	private String name;
 	
+	public PaymentMethod() {
+		name = "";
+	}
+	
 	public PaymentMethod(String name) {
 		this.name = name;
 	}
